@@ -1,0 +1,15 @@
+.git
+.github
+.env
+*.key
+openai-api-key.txt
+*.rar
+**/node_modules
+frontend/dist
+frontend/*.tsbuildinfo
+backend/.venv
+backend/data
+backend/tests
+backend/**/__pycache__
+backend/.pytest_cache
+fixtures/demo/uploads

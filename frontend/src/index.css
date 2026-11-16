@@ -1,0 +1,141 @@
+@import "tailwindcss";
+
+/* Themes are CSS variables on <html data-theme>. Tailwind utilities read them,
+   so components never branch on the theme. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+:root,
+[data-theme="light"] {
+  --bg: #f5f1ea; /* Sand */
+  --surface: #ffffff;
+  --surface-2: #e6ecf5; /* Mist */
+  --surface-3: #eee9df;
+  --ink: #12202e; /* Ink */
+  --muted: #5b6675;
+  --faint: #8a93a0;
+  --line: #e2dcd1;
+  --line-strong: #cfc7b9;
+  --accent: #2f66e0; /* Sky */
+  --accent-ink: #ffffff;
+  --accent-soft: #e3ebfc;
+  --rising: #1e9e78;
+  --steady: #8b95a5;
+  --fading: #e0604a;
+  --insufficient: #b3aa9a;
+  --rising-soft: #dff2ea;
+  --steady-soft: #eceef2;
+  --fading-soft: #fbe6e1;
+  --insufficient-soft: #efebe3;
+  --shadow: 0 1px 2px rgb(18 32 46 / 0.05);
+  --shadow-lg: 0 2px 6px rgb(18 32 46 / 0.06), 0 24px 60px -24px rgb(18 32 46 / 0.28);
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  /* Ink, darkened and slightly desaturated so the surfaces read as dark, not blue. */
+  --bg: #0d141c;
+  --surface: #131c26;
+  --surface-2: #1a2633;
+  --surface-3: #16202b;
+  --ink: #edf0f4;
+  --muted: #a0aab7;
+  --faint: #7a8594;
+  --line: #222e3b;
+  --line-strong: #2e3b4a;
+  --accent: #5b8bf0;
+  --accent-ink: #0d141c;
+  --accent-soft: #1a2a45;
+  --rising: #34b98d;
+  --steady: #98a2b0;
+  --fading: #ee7562;
+  --insufficient: #6f7a88;
+  --rising-soft: #14322b;
+  --steady-soft: #1d2731;
+  --fading-soft: #3a2326;
+  --insufficient-soft: #19222c;
+  --shadow: 0 1px 2px rgb(0 0 0 / 0.25);
+  --shadow-lg: 0 2px 6px rgb(0 0 0 / 0.3), 0 24px 60px -24px rgb(0 0 0 / 0.6);
+  color-scheme: dark;
+}
+
+@theme inline {
+  --font-sans: "Plus Jakarta Sans Variable", "Manrope Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  /* Readings: scores, dates, costs, counts. */
+  --font-mono: "JetBrains Mono Variable", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-soft: var(--accent-soft);
+  --color-rising: var(--rising);
+  --color-steady: var(--steady);
+  --color-fading: var(--fading);
+  --color-insufficient: var(--insufficient);
+  --color-rising-soft: var(--rising-soft);
+  --color-steady-soft: var(--steady-soft);
+  --color-fading-soft: var(--fading-soft);
+  --color-insufficient-soft: var(--insufficient-soft);
+  --shadow-card: var(--shadow);
+  --shadow-pop: var(--shadow-lg);
+}
+
+html {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+body {
+  min-height: 100dvh;
+}
+html.theme-anim,
+html.theme-anim * {
+  transition: background-color 0.4s var(--ease-out), border-color 0.4s var(--ease-out), color 0.4s var(--ease-out), fill 0.4s var(--ease-out) !important;
+}
+::selection {
+  background: var(--accent-soft);
+}
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+/* A reading: the mono figures used for scores, dates, costs and counts. */
+.reading {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+}
+.hatch {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent 0 5px,
+    color-mix(in srgb, var(--insufficient) 35%, transparent) 5px 6px
+  );
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  scrollbar-width: none;
+}
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

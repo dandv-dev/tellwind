@@ -1,0 +1,2 @@
+visual-element.jpg; photographer: David Valentine; source: https://unsplash.com/photos/long-exposure-of-calm-sea-7yaEgppj_5g; license: Unsplash License (https://unsplash.com/license)
+people.jpg; photographer: Andreea Avramescu; source: https://unsplash.com/photos/people-reviewing-documents-in-workspace-wR56AUlEsE4; license: Unsplash License (https://unsplash.com/license)

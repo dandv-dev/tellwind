@@ -1,0 +1,32 @@
+# The free Render instance sleeps after 15 minutes without traffic, so its
+# in-process scheduler can't be trusted to fire at 06:00. This pings the app
+# every hour: the request wakes it, and /api/cron/tick starts any runs that
+# are due. (Startup also catches up on missed runs.)
+#
+# Setup: repository secret CRON_SECRET (same value as on Render) and
+# repository variable TELLWIND_URL (e.g. https://tellwind.onrender.com).
+name: Daily brief tick
+
+on:
+  schedule:
+    - cron: "7 * * * *"
+  workflow_dispatch:
+
+jobs:
+  tick:
+    runs-on: ubuntu-latest
+    if: ${{ vars.TELLWIND_URL != '' }}
+    steps:
+      - name: Wake the app and start due runs
+        env:
+          URL: ${{ vars.TELLWIND_URL }}
+          SECRET: ${{ secrets.CRON_SECRET }}
+        run: |
+          # A cold start can take a minute; retry instead of failing on the first timeout.
+          for i in 1 2 3; do
+            if curl -fsS --max-time 90 -X POST -H "X-Cron-Secret: $SECRET" "$URL/api/cron/tick"; then
+              exit 0
+            fi
+            sleep 20
+          done
+          exit 1

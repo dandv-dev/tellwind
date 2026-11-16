@@ -1,0 +1,30 @@
+# Render Blueprint: one Docker web service + a free Postgres.
+# New > Blueprint > pick this repo. Render asks for the values marked `sync: false`.
+services:
+  - type: web
+    name: tellwind
+    runtime: docker
+    plan: free
+    region: frankfurt
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: tellwind-db
+          property: connectionString
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: CRON_SECRET
+        generateValue: true
+      - key: COOKIE_SECURE
+        value: "true"
+      # PUBLIC_URL (for invite links) defaults to RENDER_EXTERNAL_URL, which Render sets.
+
+databases:
+  - name: tellwind-db
+    plan: free
+    region: frankfurt
+    databaseName: tellwind
+    user: tellwind

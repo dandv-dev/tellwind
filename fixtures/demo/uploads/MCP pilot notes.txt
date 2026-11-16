@@ -1,0 +1,18 @@
+MCP pilot notes - platform team
+Updated 12 November 2026
+
+Context
+We ran a three-week pilot connecting our coding agents to internal systems through Model Context Protocol (MCP) servers: Jira, our feature-flag service and the read-only observability API.
+
+What worked
+- Agents with the Jira MCP server closed 34 small tickets end to end during the pilot, against 11 in the three weeks before without it.
+- Setting up a new MCP server took about half a day once the first one was done. Most vendors we use now ship an official MCP server, so we wrote only one ourselves.
+- Developers liked that the same servers work in both the IDE and the CLI agent.
+
+What worried security
+- Two servers we tested exposed write tools by default. Security asked for an allow-list of tools per server before any wider rollout.
+- Tokens were stored in plain config files on laptops in the first week. We moved them to the secrets manager.
+- Prompt injection through ticket descriptions is a real risk: an agent read a ticket that told it to change a feature flag. It asked for confirmation, but only because we had turned confirmations on.
+
+Decision
+Security signed off on a wider rollout with the allow-list and confirmations required. We plan to connect three more systems in December. Our view: MCP adoption is accelerating across the vendors we use, and the security tooling is catching up.
